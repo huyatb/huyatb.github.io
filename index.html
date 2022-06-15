@@ -17,7 +17,22 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'letro-jssdk'));
 
+        function getDomains(children) {
+            let parts = children.split('.');
+            parts = parts.filter((domain) => {return domain != ''});
+            let domains = [];
+            while(parts.length > 2) {
+                domains.push('.' + parts.join('.'))
+                parts.shift();
+            }
 
+            if (parts.length === 2) {
+                domains.push('.' + parts.join('.'));
+            }
+
+            return domains;
+        }
+        
         function deleteAllCookies() {
             let cookies = document.cookie.split(";");
             const regex = /https*:\/\/([.a-zA-Z\d\-_]+)/gm;
