@@ -7,34 +7,37 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script>
 
-    window.__letroUgcGadget = window.__letroUgcGadget || {};
-    __letroUgcGadget.advertiser_id = 943;
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "https://letro.jp/tags/js/letro.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'letro-jssdk'));
+        window.__letroUgcGadget = window.__letroUgcGadget || {};
+        __letroUgcGadget.advertiser_id = 943;
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://letro.jp/tags/js/letro.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'letro-jssdk'));
 
 
         function deleteAllCookies() {
-            var cookies = document.cookie.split(";");
+            let cookies = document.cookie.split(";");
+            const regex = /https*:\/\/([.a-zA-Z\d\-_]+)/gm;
+            let m = regex.exec(window.location.href);
+            let domain = m[1];
+            if(!domain.startsWith('.')) {
+                domain = `.${domain}`;
+            }
+            const domains = getDomains(domain);
 
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i];
-
-                var eqPos = cookie.indexOf("=");
-                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i];
+                let eqPos = cookie.indexOf("=");
+                let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
                 name = name.trim();
 
                 if (name.indexOf('__') >= 0) {
-                    //var newCookie = `name=${name}; expires=${new Date(0).toUTCString()}`;
-                    //var newCookie = `${name}=; expires=${new Date(0).toUTCString()}; path=/; domain=localhost`;
-                    var newCookie = `${name}=; expires=${new Date(0).toUTCString()}; path=/`;
-                    console.log(newCookie);
+                    let newCookie = `${name}=; expires=${new Date(0).toUTCString()}; path=/`;
                     document.cookie = newCookie;
+                    domains.forEach((dm) => {document.cookie = `${name}=; expires=${new Date(0).toUTCString()}; path=/; domain=${dm}`;});
                 }
             }
 
