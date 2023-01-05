@@ -17,6 +17,28 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'letro-jssdk'));
 
+    window.addEventListener('load', function() {
+        var id = 'letro-review-js';
+        var sid = 'letro-review-style';
+        if (document.getElementById(id)) {
+          return;
+        }
+        var ram = new Date().getTime();
+        var lrjs = document.createElement('script');
+        lrjs.id = id;
+        lrjs.src = 'https://letro.jp/tags/js/letro-review.js?v=' + ram;
+        var lrs = document.createElement('link');
+        lrs.id = sid;
+        lrs.rel = 'stylesheet';
+        lrs.href = 'https://letro.jp/tags/css/letro-review.css?v=' + ram;
+        document.body.appendChild(lrjs);
+        document.head.appendChild(lrs);
+        var ltag = document.createElement('div');
+        ltag.setAttribute('class', '__letro-reivew-tag');
+        ltag.setAttribute('data-ec-site-id', '63b67ddede777');
+        document.body.appendChild(ltag);
+    });
+        
         function getDomains(children) {
             let parts = children.split('.');
             parts = parts.filter((domain) => {return domain != ''});
